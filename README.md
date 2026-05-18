@@ -27,7 +27,7 @@
 
 Dự án được thực hiện bởi **2 học sinh trường THPT Nguyễn Gia Thiều** và đạt **giải Ba** trong cuộc thi lần này.
 - Nguyễn Phương Thảo - 12A4 K74 - Trưởng nhóm, phụ trách cơ khí, viết báo cáo, thiết kế Infographic, vẽ CAD.
-- Bùi Gia Hiếu - 12A4 K74 - Phụ trách phần lập trình, lên ý tưởng thuật toán.
+- Bùi Gia Hiếu - 12A4 K74 - Phụ trách phần lập trình, điện tử, lên ý tưởng thuật toán.
 
 Hệ thống bao gồm:
 
