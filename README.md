@@ -1,21 +1,17 @@
-# Smart Garbage Bin using ESP32, ESP32-CAM and AI Classification
-
-### Note (to English users): Almost all files and instructions are written in Vietnamese. We kindly ask for your understanding and suggest using translation software for your convenience.
+# ESP32-CAM Code
 
 ## Mục lục
 - [Giới thiệu](#giới-thiệu)
-
-- [Cấu trúc hệ thống](#cấu-trúc-hệ-thống)
-
-- [Cấu trúc repository](#cấu-trúc-repository)
 
 - [Phần cứng sử dụng](#phần-cứng-sử-dụng)
 
 - [Cách thức hoạt động](#cách-thức-hoạt-động)
 
-- [Các thành phần chính](#các-thành-phần-chính)
+- [Cài đặt](#cài-đặt)
 
-- [Hướng dẫn chi tiết](#hướng-dẫn-chi-tiết)
+- [Lắp đặt phần cứng](#lắp-đặt-phần-cứng)
+
+- [Cấu hình code](#cấu-hình-code)
 
 - [Lưu ý quan trọng](#lưu-ý-quan-trọng)
 
@@ -23,123 +19,67 @@
 
 ## Giới thiệu
 
-Đây là dự án **Nghiên cứu khoa học 2025 cấp cụm Long Biên - Gia Lâm** với đề tài: **Thiết bị phân loại rác thải tại trường học ứng dụng trí tuệ nhân tạo trong nhận dạng hình ảnh**.
+Đây là code dành cho module **ESP32-CAM**, có nhiệm vụ:
 
-Dự án được thực hiện bởi **2 học sinh trường THPT Nguyễn Gia Thiều** và đạt **giải Ba** trong cuộc thi lần này.
+- Chụp ảnh vật thể (rác)
+- Gửi ảnh đến Python Flask Server
+- Nhận kết quả phân loại từ server
+- Gửi tín hiệu đến ESP32 chính để điều khiển thùng rác mở đúng ngăn
 
-Hệ thống bao gồm:
-
-- **ESP32-CAM** dùng để chụp ảnh rác
-- **Python Flask Server** xử lý AI classification
-- **ESP32 Main Controller** điều khiển động cơ, encoder và servo
-
-Các chức năng chính:
-
-- Chụp ảnh rác
-- Phân loại rác bằng AI
-- Xoay thùng rác đến đúng vị trí
-- Mở / đóng cửa xả rác tự động
-- Dashboard thống kê realtime
-- Telegram bot tra cứu xếp hạng
-
-Tài liệu tham khảo:
-
-- [Infographic](https://github.com/Hadebg/Smart-Garbage-Bin/tree/24e4c407d6ea6029b3ed0657cc2ce1dd154d9dbe/Infographic)
-
-- [Bản báo cáo 11 trang NCKH](https://github.com/Hadebg/Smart-Garbage-Bin/blob/6a3810f7d26c578fdb0efe15dc6c7517d484ff65/B%C3%A1o%20c%C3%A1o%2011%20trang%20NCKH%20.docx)
-
-- [Sơ đồ thuật toán](https://github.com/Hadebg/Smart-Garbage-Bin/blob/6a3810f7d26c578fdb0efe15dc6c7517d484ff65/Vi%20%C4%91i%E1%BB%81u%20khi%E1%BB%83n%20ESP32.png)
-
-- [Hình ảnh thực tế các website và application](https://github.com/Hadebg/Smart-Garbage-Bin/tree/1373eee028f656566a0b940dd4c0265a63d91e31/Website%20Sample)
-
----
-
-## Cấu trúc hệ thống
-
-```text
-ESP32-CAM
-   ↓
-Capture Image
-   ↓
-Python Flask Server
-   ↓
-Gemini AI / Custom AI Model
-   ↓
-Classification Result
-   ↓
-ESP32 Main Controller
-   ↓
-Motor + Encoder + Servo
-   ↓
-Correct Trash Bin
-```
-
-Ngoài ra:
-
-```text
-Flask Server
-   ├── SQLite Database
-   ├── Dashboard Realtime
-   └── Telegram Bot
-```
-
----
-
-## Cấu trúc repository
-
-Repository được chia thành nhiều branch riêng biệt:
-
-```text
-main
-├── Tổng quan project
-
-MAIN-ESP32-CODE
-├── ESP32 Main Controller code
-
-ESP32-CAM-CODE
-├── ESP32-CAM code
-
-MAIN-PYTHON-FLASK-SERVER-CODE
-├── Python Flask Server code
-```
+ESP32-CAM đóng vai trò là **camera và bộ truyền dữ liệu hình ảnh** trong hệ thống Smart Garbage Bin.
 
 ---
 
 ## Phần cứng sử dụng
 
-### ESP32 Main
-- ESP32
-- 1 DC motor encoder
-- 2 Servo MG996
-- 1 Proximity Sensor
-- H-Bridge driver
-
-### ESP32-CAM
 - ESP32-CAM AI Thinker
-- OV2640 Camera
-- Push Button
-
-### Server
-- Laptop / PC / mini PC chạy Python Flask
+- Camera OV2640
+- Push Button (nút chụp ảnh)
 
 ---
 
 ## Cách thức hoạt động
 
-### 1. Capture
-Người dùng nhấn nút trên ESP32-CAM để chụp ảnh rác.
+### 1. Kết nối Wi-Fi
+ESP32-CAM kết nối tới Wi-Fi.
+
+**Wi-Fi này phải giống với:**
+- Python Flask Server
+- ESP32 chính
+
+Sau khi kết nối thành công, ESP32-CAM sẽ:
+
+- khởi tạo camera
+- thiết lập thông số camera
+- sẵn sàng chụp ảnh
 
 ---
 
-### 2. Classification
-ESP32-CAM gửi ảnh đến Flask server.
+### 2. Chụp ảnh
+Người dùng nhấn nút được nối với ESP32-CAM.
 
-Flask server:
-- nhận ảnh
-- gửi tới Gemini AI hoặc custom AI model
-- nhận kết quả phân loại
+Khi nút được nhấn:
 
-Ví dụ:
+- nút sẽ bị khóa tạm thời để tránh spam
+- camera chụp ảnh
+- bật flash LED hỗ trợ ánh sáng
+
+---
+
+### 3. Gửi ảnh đến Flask Server
+ESP32-CAM:
+
+- mã hóa ảnh thành Base64
+- đóng gói thành JSON
+- gửi HTTP POST request đến Python Flask Server
+
+Server sẽ gửi ảnh tới Gemini AI để phân loại.
+
+---
+
+### 4. Nhận kết quả phân loại
+Sau khi Flask server xử lý xong, ESP32-CAM nhận kết quả:
+
 - Organic
 - Plastic
 - Recyclable can
@@ -147,102 +87,177 @@ Ví dụ:
 
 ---
 
-### 3. Control
-ESP32-CAM gửi request đến ESP32 Main Controller.
+### 5. Gửi tín hiệu đến ESP32 chính
+Dựa trên kết quả phân loại, ESP32-CAM gửi request tới ESP32 chính:
 
-ESP32 Main:
-- xoay thùng bằng encoder
-- căn vị trí bằng cảm biến tiệm cận
-- mở cửa xả rác bằng servo
-- đóng lại
+- bin1 → Organic
+- bin2 → Plastic
+- bin3 → Recyclable can
+- bin4 → Recyclable paper
 
----
-
-### 4. Statistics
-Flask server lưu dữ liệu:
-
-- số lượng rác
-- loại rác
-- thiết bị
-
-vào SQLite database.
-
-Dashboard và Telegram bot sử dụng dữ liệu này để hiển thị thống kê realtime.
+ESP32 chính sẽ điều khiển servo/motor để mở đúng ngăn rác.
 
 ---
 
-## Các thành phần chính
+### 6. Kết thúc chu trình
+Sau khi gửi tín hiệu:
 
-### ESP32 Main Controller
-Chịu trách nhiệm:
-- điều khiển motor
-- encoder positioning
-- servo dumping
-- manual webserver control
+- bộ nhớ ảnh được giải phóng
+- flash tắt
+- nút chụp được mở khóa
 
-Branch:
+ESP32-CAM sẵn sàng cho lần phân loại tiếp theo.
 
-```text
-MAIN-ESP32-CODE
+---
+
+## Cài đặt
+
+### Cấu hình Wi-Fi
+
+Thay đổi:
+
+```cpp
+const char* ssid = "YOUR_WIFI";
+const char* password = "YOUR_PASSWORD";
 ```
 
+Wi-Fi phải trùng với mạng của:
+
+- Flask Server
+- ESP32 chính
+
 ---
 
-### ESP32-CAM
-Chịu trách nhiệm:
-- camera capture
-- gửi ảnh tới server
-- nhận classification result
-- gửi tín hiệu điều khiển
+## Lắp đặt phần cứng
 
-Branch:
+### Vị trí camera
+ESP32-CAM nên được lắp:
 
-```text
-ESP32-CAM-CODE
+- phía trên cửa thả rác
+- hướng camera xuống khu vực vật thể rơi vào
+
+Điều này giúp camera chụp được toàn bộ vật thể.
+
+---
+
+### Test camera trước khi lắp chính thức
+Khuyến nghị test trước bằng code streaming:
+
+[ESP32-CAM Streaming Test Guide](https://randomnerdtutorials.com/esp32-cam-video-streaming-face-recognition-arduino-ide/)
+
+Mục đích:
+
+- kiểm tra góc camera
+- kiểm tra khoảng cách
+- đảm bảo ảnh không quá gần hoặc quá xa
+
+Nên điều chỉnh sao cho:
+
+- vật thể luôn nằm trong khung hình
+- hình ảnh rõ nét
+- camera cố định chắc chắn
+
+---
+
+## Cấu hình code
+
+### 1. Địa chỉ Flask Server
+
+Thay đổi:
+
+```cpp
+const char* serverHost = "YOUR_FLASK_SERVER_IP";
 ```
 
----
+Ví dụ:
 
-### Python Flask Server
-Chịu trách nhiệm:
-- AI classification
-- database
-- dashboard
-- Telegram bot
-
-Branch:
-
-```text
-MAIN-PYTHON-FLASK-SERVER-CODE
+```cpp
+const char* serverHost = "192.168.1.10";
 ```
 
+Đây là IP của máy chạy Python Flask Server.
+
+Xem cách lấy IP của Python Flask Server [tại đây](https://github.com/Hadebg/Smart-Garbage-Bin/blob/MAIN-PYTHON-FLASK-SERVER-CODE/README.md#ch%E1%BA%A1y-server)
+
 ---
 
-## Hướng dẫn chi tiết
+### 2. Địa chỉ ESP32 chính
 
-Xem hướng dẫn cài đặt và cấu hình chi tiết tại:
+Thay đổi:
 
-- [ESP32 Main Controller](https://github.com/Hadebg/Smart-Garbage-Bin/blob/12f1a642b9ed6adbaa4f1e1429129cc2bacee4ee/README.md)
+```cpp
+const char* serverHost2 = "YOUR_MAIN_ESP32_IP";
+```
 
-- [ESP32-CAM](https://github.com/Hadebg/Smart-Garbage-Bin/blob/8e77c1a6d40e7d2d46e0e081639e8c9b849097f0/README.md)
+Đây là IP của ESP32 chính dùng để điều khiển thùng rác.
 
-- [Python Flask Server](https://github.com/Hadebg/Smart-Garbage-Bin/blob/39f831886b4312dc84e939683e79242ef0dca299/README.md)
+Xem cách lấy IP của ESP32 chính [tại đây](https://github.com/Hadebg/Smart-Garbage-Bin/blob/MAIN-ESP32-CODE/README.md#c%E1%BA%A5u-h%C3%ACnh-code)
+
+---
+
+### 3. Nút chụp ảnh
+
+Cấu hình:
+
+```cpp
+const int BUTTON_PIN = 13;
+```
+
+Có thể thay đổi tùy chân nối nút.
+
+---
+
+### 4. Pin camera
+Code mặc định sử dụng pin mapping cho:
+
+- ESP32-CAM AI Thinker
+
+Nếu dùng module khác, cần chỉnh lại các chân:
+
+```cpp
+#define PWDN_GPIO_NUM
+...
+#define PCLK_GPIO_NUM
+```
+
+(từ dòng 35 đến dòng 52)
+
+Có thể tra cứu pin mapping theo board đang sử dụng.
 
 ---
 
 ## Lưu ý quan trọng
 
-- Tất cả thiết bị phải cùng mạng Wi-Fi:
-  - ESP32-CAM
-  - ESP32 Main
-  - Flask Server
+### Camera settings mặc định
+Code hiện sử dụng:
 
-- Wi-Fi nên bật trước khi cấp nguồn cho ESP32
+```cpp
+config.frame_size = FRAMESIZE_XGA;
+config.jpeg_quality = 7;
+```
 
-- Khuyến nghị dùng nguồn riêng cho:
-  - Servo
-  - Motor
+Đây là cấu hình đã được kiểm thử ổn định:
 
-để tránh sụt áp làm reset ESP32.
+- chất lượng ảnh tốt
+- không gây tràn bộ nhớ
+- hạn chế crash ESP32-CAM
 
-- Đây là bản sử dụng Gemini AI để phân tích hình ảnh và ESP32-CAM cần phải sử dụng nút để chụp ảnh, có thể tối ưu bằng việc train AI riêng để tự động phân loại ngay khi thả rác
+---
+
+### Khi thay đổi chất lượng ảnh
+Có thể chỉnh:
+
+- resolution
+- jpeg quality
+
+Tuy nhiên cần chú ý:
+
+- bộ nhớ ESP32-CAM khá hạn chế
+- ảnh quá lớn có thể gây lỗi capture hoặc reset board
+
+---
+
+### Khuyến nghị
+Nên giữ nguyên cấu hình mặc định nếu không thực sự cần thay đổi.
+
+---
