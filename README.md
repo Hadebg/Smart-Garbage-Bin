@@ -42,10 +42,16 @@ Các chức năng chính:
 - Dashboard thống kê realtime
 - Telegram bot tra cứu xếp hạng
 
-Toàn bộ quá trình từ phân loại đến xả rác vào đúng ngăn đều diễn ra tự động.  
-Người dùng chỉ cần nhấn nút để bắt đầu chu trình phân loại và can thiệp khi thùng chứa đầy.  
+---
 
-Khi đó, ứng dụng **Trash Bin Controller** có thể được sử dụng để điều khiển thùng rác thủ công.
+### Cách sử dụng
+
+> Toàn bộ quá trình từ phân loại đến xả rác vào đúng ngăn đều diễn ra tự động.  
+> Người dùng chỉ cần nhấn nút để bắt đầu chu trình phân loại và can thiệp khi thùng chứa đầy.
+
+> Khi cần điều khiển thủ công, có thể sử dụng ứng dụng **Trash Bin Controller**.
+
+---
 
 Tài liệu tham khảo:
 
