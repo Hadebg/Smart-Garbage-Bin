@@ -26,6 +26,8 @@
 Đây là dự án **Nghiên cứu khoa học 2025 cấp cụm Long Biên - Gia Lâm** với đề tài: **Thiết bị phân loại rác thải tại trường học ứng dụng trí tuệ nhân tạo trong nhận dạng hình ảnh**.
 
 Dự án được thực hiện bởi **2 học sinh trường THPT Nguyễn Gia Thiều** và đạt **giải Ba** trong cuộc thi lần này.
+- Nguyễn Phương Thảo - 12A4 K74 - Trưởng nhóm, phụ trách cơ khí, viết báo cáo, thiết kế Infographic, vẽ CAD.
+- Bùi Gia Hiếu - 12A4 K74 - Phụ trách phần lập trình, lên ý tưởng thuật toán.
 
 Hệ thống bao gồm:
 
@@ -62,6 +64,8 @@ Tài liệu tham khảo:
 - [Sơ đồ thuật toán](https://github.com/Hadebg/Smart-Garbage-Bin/blob/main/Vi%20điều%20khiển%20ESP32.png)
 
 - [Hình ảnh thực tế các website và application](https://github.com/Hadebg/Smart-Garbage-Bin/tree/main/Website%20Sample)
+
+- [Bản vẽ CAD](https://cad.onshape.com/documents/ba939c71e7c2fb866b2b4e48/w/13afe23e6c85b8d1b5e544f1/e/3c8c6ffb1d8ba5d27ab3002d?renderMode=0&uiState=6a0b3cfb3bc17f0335aad8fb)
 
 ---
 
