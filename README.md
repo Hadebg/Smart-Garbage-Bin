@@ -77,7 +77,7 @@ Webserver cho phép người dùng:
 
 4. Upload code vào ESP32
 
-5. Upload file webserver [data/index.html](https://github.com/Hadebg/Smart-Garbage-Bin/tree/d92fa6b60e314104d9eb544cea82caeac0f0bad0/data): Tham khảo các bước làm tại các website sau:
+5. Upload file webserver [data/index.html](https://github.com/Hadebg/Smart-Garbage-Bin/blob/be059cc2ac6cf4b61570932ecdd7f2a1b11d6a7c/data/index.html): Tham khảo các bước làm tại các website sau:
 - Đối với PlatformIO: [PlatformIO_SPIFFS](https://randomnerdtutorials.com/esp32-vs-code-platformio-spiffs/)
 - Đối với ArduinoIDE: [ArduinoIDE_SPIFFS](https://randomnerdtutorials.com/install-esp32-filesystem-uploader-arduino-ide/)
 
