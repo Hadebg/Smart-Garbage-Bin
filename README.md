@@ -44,13 +44,13 @@ Các chức năng chính:
 
 Tài liệu tham khảo:
 
-- [Infographic](https://github.com/Hadebg/Smart-Garbage-Bin/tree/24e4c407d6ea6029b3ed0657cc2ce1dd154d9dbe/Infographic)
+- [Infographic](https://github.com/Hadebg/Smart-Garbage-Bin/tree/a091debcf8df6acf01d826d737942f995bafb458/Infographic)
 
-- [Bản báo cáo 11 trang NCKH](https://github.com/Hadebg/Smart-Garbage-Bin/blob/6a3810f7d26c578fdb0efe15dc6c7517d484ff65/B%C3%A1o%20c%C3%A1o%2011%20trang%20NCKH%20.docx)
+- [Bản báo cáo 11 trang NCKH](https://github.com/Hadebg/Smart-Garbage-Bin/blob/a091debcf8df6acf01d826d737942f995bafb458/B%C3%A1o%20c%C3%A1o%2011%20trang%20NCKH%20.docx)
 
-- [Sơ đồ thuật toán](https://github.com/Hadebg/Smart-Garbage-Bin/blob/6a3810f7d26c578fdb0efe15dc6c7517d484ff65/Vi%20%C4%91i%E1%BB%81u%20khi%E1%BB%83n%20ESP32.png)
+- [Sơ đồ thuật toán](https://github.com/Hadebg/Smart-Garbage-Bin/blob/a091debcf8df6acf01d826d737942f995bafb458/Vi%20%C4%91i%E1%BB%81u%20khi%E1%BB%83n%20ESP32.png)
 
-- [Hình ảnh thực tế các website và application](https://github.com/Hadebg/Smart-Garbage-Bin/tree/1373eee028f656566a0b940dd4c0265a63d91e31/Website%20Sample)
+- [Hình ảnh thực tế các website và application](https://github.com/Hadebg/Smart-Garbage-Bin/tree/a091debcf8df6acf01d826d737942f995bafb458/Website%20Sample)
 
 ---
 
@@ -222,11 +222,11 @@ MAIN-PYTHON-FLASK-SERVER-CODE
 
 Xem hướng dẫn cài đặt và cấu hình chi tiết tại:
 
-- [ESP32 Main Controller](https://github.com/Hadebg/Smart-Garbage-Bin/blob/12f1a642b9ed6adbaa4f1e1429129cc2bacee4ee/README.md)
+- [ESP32 Main Controller](https://github.com/Hadebg/Smart-Garbage-Bin/blob/be059cc2ac6cf4b61570932ecdd7f2a1b11d6a7c/README.md)
 
-- [ESP32-CAM](https://github.com/Hadebg/Smart-Garbage-Bin/blob/8e77c1a6d40e7d2d46e0e081639e8c9b849097f0/README.md)
+- [ESP32-CAM](https://github.com/Hadebg/Smart-Garbage-Bin/blob/62043267ad3e1182551651e82b7c890578d83cd8/README.md)
 
-- [Python Flask Server](https://github.com/Hadebg/Smart-Garbage-Bin/blob/39f831886b4312dc84e939683e79242ef0dca299/README.md)
+- [Python Flask Server](https://github.com/Hadebg/Smart-Garbage-Bin/blob/236798e9ce98298952b7e73ba94b1e58c9a8fae3/README.md)
 
 ---
 
