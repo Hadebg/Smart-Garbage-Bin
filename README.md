@@ -44,13 +44,13 @@ Các chức năng chính:
 
 Tài liệu tham khảo:
 
-- [Infographic](https://github.com/Hadebg/Smart-Garbage-Bin/tree/a091debcf8df6acf01d826d737942f995bafb458/Infographic)
+- [Infographic](https://github.com/Hadebg/Smart-Garbage-Bin/tree/main/Infographic)
 
-- [Bản báo cáo 11 trang NCKH](https://github.com/Hadebg/Smart-Garbage-Bin/blob/a091debcf8df6acf01d826d737942f995bafb458/B%C3%A1o%20c%C3%A1o%2011%20trang%20NCKH%20.docx)
+- [Bản báo cáo 11 trang NCKH](https://github.com/Hadebg/Smart-Garbage-Bin/blob/main/Báo%20cáo%2011%20trang%20NCKH%20.docx)
 
-- [Sơ đồ thuật toán](https://github.com/Hadebg/Smart-Garbage-Bin/blob/a091debcf8df6acf01d826d737942f995bafb458/Vi%20%C4%91i%E1%BB%81u%20khi%E1%BB%83n%20ESP32.png)
+- [Sơ đồ thuật toán](https://github.com/Hadebg/Smart-Garbage-Bin/blob/main/Vi%20điều%20khiển%20ESP32.png)
 
-- [Hình ảnh thực tế các website và application](https://github.com/Hadebg/Smart-Garbage-Bin/tree/a091debcf8df6acf01d826d737942f995bafb458/Website%20Sample)
+- [Hình ảnh thực tế các website và application](https://github.com/Hadebg/Smart-Garbage-Bin/tree/main/Website%20Sample)
 
 ---
 
@@ -222,11 +222,11 @@ MAIN-PYTHON-FLASK-SERVER-CODE
 
 Xem hướng dẫn cài đặt và cấu hình chi tiết tại:
 
-- [ESP32 Main Controller](https://github.com/Hadebg/Smart-Garbage-Bin/blob/e256c4547b7debbceed379ceea7fa40a59c9900f/README.md)
+- [ESP32 Main Controller](https://github.com/Hadebg/Smart-Garbage-Bin/blob/MAIN-ESP32-CODE/README.md)
 
-- [ESP32-CAM](https://github.com/Hadebg/Smart-Garbage-Bin/blob/51f6d4306187767a3f7efdde39b7d75cbdfce307/README.md)
+- [ESP32-CAM](https://github.com/Hadebg/Smart-Garbage-Bin/blob/ESP32-CAM-CODE/README.md)
 
-- [Python Flask Server](https://github.com/Hadebg/Smart-Garbage-Bin/blob/236798e9ce98298952b7e73ba94b1e58c9a8fae3/README.md)
+- [Python Flask Server](https://github.com/Hadebg/Smart-Garbage-Bin/blob/MAIN-PYTHON-FLASK-SERVER-CODE/README.md)
 
 ---
 
