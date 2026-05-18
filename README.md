@@ -1,21 +1,19 @@
-# Smart Garbage Bin using ESP32, ESP32-CAM and AI Classification
-
-### Note (to English users): Almost all files and instructions are written in Vietnamese. We kindly ask for your understanding and suggest using translation software for your convenience.
+# Python Flask Server (Main Server)
 
 ## Mục lục
 - [Giới thiệu](#giới-thiệu)
 
-- [Cấu trúc hệ thống](#cấu-trúc-hệ-thống)
-
-- [Cấu trúc repository](#cấu-trúc-repository)
-
-- [Phần cứng sử dụng](#phần-cứng-sử-dụng)
-
 - [Cách thức hoạt động](#cách-thức-hoạt-động)
 
-- [Các thành phần chính](#các-thành-phần-chính)
+- [Cài đặt](#cài-đặt)
 
-- [Hướng dẫn chi tiết](#hướng-dẫn-chi-tiết)
+- [Chạy server](#chạy-server)
+
+- [Sử dụng Dashboard](#sử-dụng-dashboard)
+
+- [Telegram Bot](#telegram-bot)
+
+- [Reset Database](#reset-database)
 
 - [Lưu ý quan trọng](#lưu-ý-quan-trọng)
 
@@ -23,226 +21,228 @@
 
 ## Giới thiệu
 
-Đây là dự án **Nghiên cứu khoa học 2025 cấp cụm Long Biên - Gia Lâm** với đề tài: **Thiết bị phân loại rác thải tại trường học ứng dụng trí tuệ nhân tạo trong nhận dạng hình ảnh**.
+Đây là code Python Flask server chính cho dự án **Smart Garbage Bin**.
 
-Dự án được thực hiện bởi **2 học sinh trường THPT Nguyễn Gia Thiều** và đạt **giải Ba** trong cuộc thi lần này.
+Server có nhiệm vụ:
 
-Hệ thống bao gồm:
-
-- **ESP32-CAM** dùng để chụp ảnh rác
-- **Python Flask Server** xử lý AI classification
-- **ESP32 Main Controller** điều khiển động cơ, encoder và servo
-
-Các chức năng chính:
-
-- Chụp ảnh rác
-- Phân loại rác bằng AI
-- Xoay thùng rác đến đúng vị trí
-- Mở / đóng cửa xả rác tự động
-- Dashboard thống kê realtime
-- Telegram bot tra cứu xếp hạng
-
-Tài liệu tham khảo:
-
-- [Infographic](https://github.com/Hadebg/Smart-Garbage-Bin/tree/24e4c407d6ea6029b3ed0657cc2ce1dd154d9dbe/Infographic)
-
-- [Bản báo cáo 11 trang NCKH](https://github.com/Hadebg/Smart-Garbage-Bin/blob/6a3810f7d26c578fdb0efe15dc6c7517d484ff65/B%C3%A1o%20c%C3%A1o%2011%20trang%20NCKH%20.docx)
-
-- [Sơ đồ thuật toán](https://github.com/Hadebg/Smart-Garbage-Bin/blob/6a3810f7d26c578fdb0efe15dc6c7517d484ff65/Vi%20%C4%91i%E1%BB%81u%20khi%E1%BB%83n%20ESP32.png)
-
-- [Hình ảnh thực tế các website và application](https://github.com/Hadebg/Smart-Garbage-Bin/tree/1373eee028f656566a0b940dd4c0265a63d91e31/Website%20Sample)
-
----
-
-## Cấu trúc hệ thống
-
-```text
-ESP32-CAM
-   ↓
-Capture Image
-   ↓
-Python Flask Server
-   ↓
-Gemini AI / Custom AI Model
-   ↓
-Classification Result
-   ↓
-ESP32 Main Controller
-   ↓
-Motor + Encoder + Servo
-   ↓
-Correct Trash Bin
-```
-
-Ngoài ra:
-
-```text
-Flask Server
-   ├── SQLite Database
-   ├── Dashboard Realtime
-   └── Telegram Bot
-```
-
----
-
-## Cấu trúc repository
-
-Repository được chia thành nhiều branch riêng biệt:
-
-```text
-main
-├── Tổng quan project
-
-MAIN-ESP32-CODE
-├── ESP32 Main Controller code
-
-ESP32-CAM-CODE
-├── ESP32-CAM code
-
-MAIN-PYTHON-FLASK-SERVER-CODE
-├── Python Flask Server code
-```
-
----
-
-## Phần cứng sử dụng
-
-### ESP32 Main
-- ESP32
-- 1 DC motor encoder
-- 2 Servo MG996
-- 1 Proximity Sensor
-- H-Bridge driver
-
-### ESP32-CAM
-- ESP32-CAM AI Thinker
-- OV2640 Camera
-- Push Button
-
-### Server
-- Laptop / PC / mini PC chạy Python Flask
+- Nhận ảnh từ ESP32-CAM
+- Gửi ảnh tới Gemini AI để phân loại rác
+- Nhận kết quả từ Gemini và trả về cho ESP32-CAM
+- Lưu dữ liệu thống kê vào database SQLite
+- Hiển thị dashboard theo thời gian thực
+- Hỗ trợ Telegram Bot để tra cứu bảng xếp hạng và thống kê
 
 ---
 
 ## Cách thức hoạt động
 
-### 1. Capture
-Người dùng nhấn nút trên ESP32-CAM để chụp ảnh rác.
+### 1. Nhận ảnh từ ESP32-CAM
+ESP32-CAM chụp ảnh vật thể và gửi ảnh đến Flask server.
 
----
+### 2. Phân loại bằng Gemini AI
+Server gửi ảnh đến Gemini AI với prompt được thiết lập sẵn.
 
-### 2. Classification
-ESP32-CAM gửi ảnh đến Flask server.
+Gemini sẽ phân loại rác thành:
 
-Flask server:
-- nhận ảnh
-- gửi tới Gemini AI hoặc custom AI model
-- nhận kết quả phân loại
+- Recycle
+- Non-recycle
+- Organic
+
+### 3. Trả kết quả và lưu dữ liệu
+Sau khi xử lý:
+
+- Kết quả được gửi về ESP32-CAM
+- Dữ liệu được lưu vào SQLite database
+
+Mỗi thiết bị được nhận diện riêng bằng **địa chỉ MAC**.
+
+### 4. Dashboard realtime
+Website dashboard sẽ tự động cập nhật dữ liệu liên tục.
+
+**Không cần refresh hoặc nhấn F5 thủ công.**
+
+### 5. Telegram Bot
+Người dùng có thể tra cứu thiết bị bằng Telegram.
+
+Lệnh sử dụng:
+
+```bash
+/ranking <tên_thiết_bị>
+```
 
 Ví dụ:
-- Organic
-- Plastic
-- Recyclable can
-- Recyclable paper
 
----
-
-### 3. Control
-ESP32-CAM gửi request đến ESP32 Main Controller.
-
-ESP32 Main:
-- xoay thùng bằng encoder
-- căn vị trí bằng cảm biến tiệm cận
-- mở cửa xả rác bằng servo
-- đóng lại
-
----
-
-### 4. Statistics
-Flask server lưu dữ liệu:
-
-- số lượng rác
-- loại rác
-- thiết bị
-
-vào SQLite database.
-
-Dashboard và Telegram bot sử dụng dữ liệu này để hiển thị thống kê realtime.
-
----
-
-## Các thành phần chính
-
-### ESP32 Main Controller
-Chịu trách nhiệm:
-- điều khiển motor
-- encoder positioning
-- servo dumping
-- manual webserver control
-
-Branch:
-
-```text
-MAIN-ESP32-CODE
+```bash
+/ranking 12A4
 ```
 
+Bot sẽ trả về:
+
+- Xếp hạng
+- Tổng số rác đã phân loại
+- Số lượng từng loại rác
+
 ---
 
-### ESP32-CAM
-Chịu trách nhiệm:
-- camera capture
-- gửi ảnh tới server
-- nhận classification result
-- gửi tín hiệu điều khiển
+## Cài đặt
 
-Branch:
+### Yêu cầu
 
-```text
-ESP32-CAM-CODE
+- Máy tính hoặc server chạy Python
+- Cùng mạng Wi-Fi với các thiết bị ESP32
+
+---
+
+### Cấu hình API Key
+
+Thay đổi các biến sau trong file Python:
+
+```python
+GEMINI_API_KEY = "YOUR_API_KEY"
+BOT_TOKEN = "YOUR_BOT_TOKEN"
+ADMIN_PASSWORD = "1234"
 ```
 
----
+Trong đó:
 
-### Python Flask Server
-Chịu trách nhiệm:
-- AI classification
-- database
-- dashboard
-- Telegram bot
+- **GEMINI_API_KEY**: lấy tại  
+[Google AI Studio](https://aistudio.google.com/welcome)
 
-Branch:
+- **BOT_TOKEN**: tham khảo cách lấy tại  
+[Telegram Bot Token Guide](https://help.superchat.com/en/articles/14901-how-do-i-get-the-telegram-token-or-bot-id)
 
-```text
-MAIN-PYTHON-FLASK-SERVER-CODE
+Có thể thay đổi:
+
+```python
+ADMIN_PASSWORD
 ```
 
+để đặt mật khẩu riêng.
+
 ---
 
-## Hướng dẫn chi tiết
+## Chạy server
 
-Xem hướng dẫn cài đặt và cấu hình chi tiết tại:
+Di chuyển terminal đến thư mục chứa project:
 
-- [ESP32 Main Controller](https://github.com/Hadebg/Smart-Garbage-Bin/blob/12f1a642b9ed6adbaa4f1e1429129cc2bacee4ee/README.md)
+```bash
+cd your_folder
+```
 
-- [ESP32-CAM](https://github.com/Hadebg/Smart-Garbage-Bin/blob/8e77c1a6d40e7d2d46e0e081639e8c9b849097f0/README.md)
+Chạy:
 
-- [Python Flask Server](https://github.com/Hadebg/Smart-Garbage-Bin/blob/39f831886b4312dc84e939683e79242ef0dca299/README.md)
+```bash
+python app.py
+```
+
+Sau khi chạy thành công, Flask sẽ hiển thị địa chỉ IP, ví dụ:
+
+```bash
+http://192.168.1.10:5000
+```
+
+Sử dụng địa chỉ IP này để:
+
+- Truy cập dashboard
+- Gán vào code ESP32-CAM
+
+---
+
+## Sử dụng Dashboard
+
+### Thiết lập lần đầu
+
+1. Thực hiện phân loại rác lần đầu để hệ thống ghi nhận địa chỉ MAC
+2. Mở website dashboard
+3. Vào tab **Settings**
+4. Nhập mật khẩu admin
+5. Đổi tên thiết bị theo địa chỉ MAC tương ứng
+
+---
+
+### Bảo mật Settings
+
+Tab Settings có cơ chế bảo mật:
+
+- Chỉ cho phép chỉnh sửa trong tối đa **3 phút**
+- Hết 3 phút sẽ tự khóa
+- Chuyển tab hoặc rời khỏi trang sẽ tự khóa
+- Nhập sai mật khẩu quá 3 lần sẽ bị khóa tạm thời
+
+---
+
+## Telegram Bot
+
+Telegram bot có thể sử dụng ở bất cứ đâu.
+
+**Không cần cùng Wi-Fi với server.**
+
+Cú pháp:
+
+```bash
+/ranking <tên_thiết_bị>
+```
+
+Ví dụ:
+
+```bash
+/ranking Class12A
+```
+
+Bot trả về:
+
+- Xếp hạng
+- Tổng số rác
+- Recycle count
+- Non-recycle count
+- Organic count
+
+---
+
+## Reset Database
+
+Project có file:
+
+```bash
+reset.py
+```
+
+Chức năng:
+
+- Xóa toàn bộ dữ liệu trong `waste_data.db`
+
+Chỉ sử dụng khi muốn reset hoàn toàn:
+
+- Bảng xếp hạng
+- Thống kê
+- Lịch sử phân loại rác
+
+Cách sử dụng:
+- Di chuyển terminal đến thư mục chứa project:
+
+```bash
+cd your_folder
+```
+
+- Chạy:
+
+```bash
+python reset.py
+```
 
 ---
 
 ## Lưu ý quan trọng
 
-- Tất cả thiết bị phải cùng mạng Wi-Fi:
-  - ESP32-CAM
-  - ESP32 Main
-  - Flask Server
+- Flask server và ESP32 phải cùng mạng Wi-Fi
+- Telegram bot có thể dùng ở mọi nơi
+- Nên đổi mật khẩu mặc định trước khi sử dụng
+- Cần chạy thiết bị ít nhất 1 lần trước khi đổi tên trong dashboard
+- Yêu cầu máy phải có Python, cài Python [tại đây](https://www.python.org/downloads/).
+- Trong trường hợp chương trình Python báo lỗi thiếu thư viện, hãy cài các thư viện cần thiết bằng lệnh sau trong terminal:
 
-- Wi-Fi nên bật trước khi cấp nguồn cho ESP32
+```bash
+pip install flask google-genai requests
+```
 
-- Khuyến nghị dùng nguồn riêng cho:
-  - Servo
-  - Motor
-
-để tránh sụt áp làm reset ESP32.
-
-- Đây là bản sử dụng Gemini AI để phân tích hình ảnh và ESP32-CAM cần phải sử dụng nút để chụp ảnh, có thể tối ưu bằng việc train AI riêng để tự động phân loại ngay khi thả rác
+---
