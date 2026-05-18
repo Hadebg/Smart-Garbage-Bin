@@ -222,9 +222,9 @@ MAIN-PYTHON-FLASK-SERVER-CODE
 
 Xem hướng dẫn cài đặt và cấu hình chi tiết tại:
 
-- [ESP32 Main Controller](https://github.com/Hadebg/Smart-Garbage-Bin/blob/be059cc2ac6cf4b61570932ecdd7f2a1b11d6a7c/README.md)
+- [ESP32 Main Controller](https://github.com/Hadebg/Smart-Garbage-Bin/blob/e256c4547b7debbceed379ceea7fa40a59c9900f/README.md)
 
-- [ESP32-CAM](https://github.com/Hadebg/Smart-Garbage-Bin/blob/62043267ad3e1182551651e82b7c890578d83cd8/README.md)
+- [ESP32-CAM](https://github.com/Hadebg/Smart-Garbage-Bin/blob/51f6d4306187767a3f7efdde39b7d75cbdfce307/README.md)
 
 - [Python Flask Server](https://github.com/Hadebg/Smart-Garbage-Bin/blob/236798e9ce98298952b7e73ba94b1e58c9a8fae3/README.md)
 
